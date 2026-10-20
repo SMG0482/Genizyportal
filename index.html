@@ -45,6 +45,62 @@
     letter-spacing: 2px;
     font-family: "Verdana", Geneva, sans-serif;
   }
+   
+/* Games tile grid */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 18px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Individual game tile */
+.game-card {
+  background: #171717;
+  border: 1px solid #303030;
+  border-radius: 8px;
+  overflow: hidden;
+  color: white;
+  text-decoration: none;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.game-card:hover {
+  transform: translateY(-4px);
+  border-color: #1685ff;
+}
+
+.game-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  background: #252525;
+}
+
+.game-info {
+  padding: 12px;
+}
+
+.game-info h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+
+.game-info p {
+  margin: 0 0 8px;
+  color: #bbb;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.game-tag {
+  color: #7dbaff;
+  font-size: 11px;
+}
+
 </style> 
   </head>
   <body>
