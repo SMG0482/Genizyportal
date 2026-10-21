@@ -173,5 +173,19 @@ thank you for understanding.</p>
       <span class="game-tag">Puzzle</span>
     </div>
   </a>
+        <script>
+  const searchBar = document.getElementById("search");
+
+  searchBar.addEventListener("input", function () {
+    const query = searchBar.value.toLowerCase().trim();
+
+    const gameItems = document.querySelectorAll(".game-card, .game-item");
+
+    gameItems.forEach(function (game) {
+      const text = game.textContent.toLowerCase();
+      game.style.display = text.includes(query) ? "" : "none";
+    });
+  });
+</script>
   </body>
 </html>
