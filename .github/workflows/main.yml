@@ -1,0 +1,67 @@
+
+name: Fix Genizymath Game Paths
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix-paths:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Fix game HTML files
+        shell: python
+        run: |
+          from pathlib import Path
+
+          root = Path("genizymath/games")
+          changed = []
+
+          if not root.exists():
+              print("Game folder not found.")
+              raise SystemExit(0)
+
+          for file in root.rglob("index.html"):
+              text = file.read_text(encoding="utf-8")
+              original = text
+
+              text = text.replace(
+                  "/images/favicon.png",
+                  "../../../images/favicon.png"
+              )
+              text = text.replace(
+                  "/styles/style.css",
+                  "../../styles/style.css"
+              )
+              text = text.replace(
+                  "/iframe/",
+                  "../../iframe/"
+              )
+
+              # Replace the old name in these game HTML files.
+              text = text.replace("genizymath", "genizyportal")
+
+              if text != original:
+                  file.write_text(text, encoding="utf-8")
+                  changed.append(str(file))
+
+          print("Updated files:", changed)
+
+      - name: Commit fixes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add genizymath/games
+          git diff --cached --quiet || (
+            git commit -m "Fix imported game paths [skip ci]" &&
+            git push
+          )
